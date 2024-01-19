@@ -62,4 +62,5 @@ This project is licensed under the [MIT License](LICENSE).
 
 - The CineFinder team acknowledges the support of the open-source community and various movie databases for providing valuable data.
 - Thank you Akshaypawar for the dataset: https://www.kaggle.com/datasets/akshaypawar7/millions-of-movies
+  
 Happy movie exploring with CineFinder! 🍿🎬
