@@ -8,7 +8,7 @@ To use CineFinder, follow these simple steps:
 
 1. **Clone the Repository:**
    ```bash
-   git clone https://github.com/your-username/cinefinder.git
+   git clone https://github.com/vishan1/cinefinder.git
    ```
 
 2. **Navigate to the Project Directory:**
