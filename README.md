@@ -23,7 +23,7 @@ To use CineFinder, follow these simple steps:
 
 4. **Run CineFinder:**
    ```bash
-   python main.py
+   python app.py
    ```
    This will start the application, and you can interact with it through the command line.
 
