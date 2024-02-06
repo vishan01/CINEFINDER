@@ -21,6 +21,7 @@ FROM
     main_table,
     unnest(array(SELECT DISTINCT unnest(string_to_array(credits, '-')))) AS actor_name
 WHERE
+    original_language='en' AND
     credits IS NOT NULL AND credits != '';
 """)
 
