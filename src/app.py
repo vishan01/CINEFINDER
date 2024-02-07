@@ -77,8 +77,8 @@ class data:
 
 def main():
     caller = data()
-    genre=pkl.load(open("../data/genres.pkl","rb"))
-    language = pkl.load(open("../data/lang.pkl","rb"))
+    genre=pkl.load(open("genres.pkl","rb"))
+    language = pkl.load(open("lang.pkl","rb"))
     count=0
     st.set_page_config(page_title="CINEFINDER", page_icon="🖥️")
     st.title(":orange[CINEFINDER]: :blue[THE MOVIE GENIE]")
