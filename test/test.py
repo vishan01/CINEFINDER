@@ -1,15 +1,16 @@
 import streamlit as st
 import load 
-from st_keyup import st_keyup
 from sqlalchemy import create_engine,text
 import pickle as pkl
-import uuid
+import random
+
 user = load.user
 host = load.link
 password= load.password
 db = load.db
 
 engine = create_engine(f'postgresql://{user}:{password}@{host}/{db}')
+
 if "recommendation" not in st.session_state:
     st.session_state["recommendation"]=[]
 
@@ -71,6 +72,7 @@ class data:
                 content["recommendation"].append(row[3])
         return content
         
+    
 
 
 
@@ -89,20 +91,24 @@ def main():
     'How You Want To Find Your CINEMA',
     ('Genre', 'Actor/Actress',"Release Year"),index=None,
    placeholder="Select Your Way")
+    
     try:
-        if st.session_state["recommendation"]:
-            
-            content=caller.recommend(st.session_state["recommendation"])
-            with st.container():
+        st.write('You selected:', option)
+        if option == 'Genre':
+            value = st.selectbox(
+                "Select Your Genre",
+                genre,index=None,placeholder="Select Your Way"
+            )
+            if value:
+                content=caller.Genre(value,language[lang])
+                count =0
+                with st.container():
                     col1,col2,col3 = st.columns(3)
                     while(count<20):
                         with col1:
                             st.image(content["image"][count])
                             st.text(content["title"][count])
-                            if st.button("Simillar Recommendations",key=uuid.uuid4()):
-                                st.session_state["recommendation"]=content["recommendation"][count].split("-")
                             count = count+1
-                            
                         with col2:
                             st.image(content["image"][count])
                             st.text(content["title"][count])
@@ -111,90 +117,63 @@ def main():
                             st.image(content["image"][count])
                             st.text(content["title"][count])
                             count = count+1
-            st.session_state["recommendation"]=[]
-            print(st.session_state["recommendation"])
-            
-        else:
-            st.write('You selected:', option)
-            if option == 'Genre':
-                value = st.selectbox(
-                    "Select Your Genre",
-                    genre,index=None,placeholder="Select Your Way"
-                )
-                if value:
-                    content=caller.Genre(value,language[lang])
-                    count =0
-                    with st.container():
-                        col1,col2,col3 = st.columns(3)
-                        while(count<20):
-                            with col1:
-                                st.image(content["image"][count])
-                                st.text(content["title"][count])
-                                if st.button("Simillar Recommendations",key=uuid.uuid4()):
-                                    st.session_state["recommendation"]=content["recommendation"][count].split("-")
-                                    print(st.session_state["recommendation"])
-                                count = count+1
-                            with col2:
-                                st.image(content["image"][count])
-                                st.text(content["title"][count])
-                                count = count+1
-                            with col3:
-                                st.image(content["image"][count])
-                                st.text(content["title"][count])
-                                count = count+1
-
-
-            if option == 'Actor/Actress':
-                
-                value = st.text_input("Enter The Name",key=0)
-                value =value.title()
-                st.write("Actor Name:", value)
-                if value:
-                    content=caller.Actor(value,language[lang])
-                    count =0
-                    with st.container():
-                        col1,col2,col3 = st.columns(3)
-                        while(count<20):
-                            with col1:
-                                st.image(content["image"][count])
-                                st.text(content["title"][count])
-                                count = count+1
-                            with col2:
-                                st.image(content["image"][count])
-                                st.text(content["title"][count])
-                                count = count+1
-                            with col3:
-                                st.image(content["image"][count])
-                                st.text(content["title"][count])
-                                count = count+1
-
-                            
-            if option == 'Release Year':
-                value = st.date_input("Enter The Year Of Release",value=None)
-                if value:
                     
-                    content=caller.Release(value,language[lang])
-                    count =0
-                    with st.container():
-                        col1,col2,col3 = st.columns(3)
-                        while(count<20):
-                            with col1:
-                                st.image(content["image"][count])
-                                st.text(content["title"][count])
-                                count = count+1
-                            with col2:
-                                st.image(content["image"][count])
-                                st.text(content["title"][count])
-                                count = count+1
-                            with col3:
-                                st.image(content["image"][count])
-                                st.text(content["title"][count])
-                                count = count+1
+
+        if option == 'Actor/Actress':
+            
+            value = st.text_input("Enter The Name",key=0)
+            value =value.title()
+            st.write("Actor Name:", value)
+            if value:
+                content=caller.Actor(value,language[lang])
+                count =0
+                with st.container():
+                    col1,col2,col3 = st.columns(3)
+                    while(count<20):
+                        with col1:
+                            st.image(content["image"][count])
+                            st.text(content["title"][count])
+                            count = count+1
+                        with col2:
+                            st.image(content["image"][count])
+                            st.text(content["title"][count])
+                            count = count+1
+                        with col3:
+                            st.image(content["image"][count])
+                            st.text(content["title"][count])
+                            count = count+1
+
+                        
+        if option == 'Release Year':
+            value = st.date_input("Enter The Year Of Release",value=None)
+            if value:
+                
+                content=caller.Release(value,language[lang])
+                count =0
+                with st.container():
+                    col1,col2,col3 = st.columns(3)
+                    while(count<20):
+                        with col1:
+                            st.image(content["image"][count])
+                            st.text(content["title"][count])
+                            count = count+1
+                        with col2:
+                            st.image(content["image"][count])
+                            st.text(content["title"][count])
+                            count = count+1
+                        with col3:
+                            st.image(content["image"][count])
+                            st.text(content["title"][count])
+                            count = count+1
     except:
         if(count==0):
             st.title("No Movies")
         else:
-            st.title("The END")
+            st.title("The End😅")
+        
+        
+        
+    
 
 
 if __name__=="__main__":
