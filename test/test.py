@@ -1,7 +1,9 @@
 import streamlit as st
 import load 
+from st_keyup import st_keyup
 from sqlalchemy import create_engine,text
 import pickle as pkl
+import re
 
 user = load.user
 host = load.link
@@ -34,7 +36,7 @@ class data:
         return content
     def Actor(self,actor,lang):
         with engine.connect() as connection:
-            query= text(f"SELECT id,title,poster_path,recommendations FROM main_table WHERE original_language='{lang}' AND credits LIKE '%{actor}%' ORDER BY result ASC,vote_average DESC,release_date DESC;")
+            query= text(f"SELECT id,title,poster_path,recommendations FROM main_table WHERE credits LIKE '%{actor}%' ORDER BY result ASC,vote_average DESC,release_date DESC;")
             result = connection.execute(query)
             
             for row in result:
@@ -64,7 +66,7 @@ def main():
     actor=pkl.load(open("../data/actors.pkl","rb"))
     genre=pkl.load(open("../data/genres.pkl","rb"))
     language = pkl.load(open("../data/lang.pkl","rb"))
-    
+
     st.set_page_config(page_title="CINEFINDER", page_icon="🖥️")
     st.title(":orange[CINEFINDER]: :blue[THE MOVIE GENIE]")
     lang = st.selectbox(
@@ -75,46 +77,86 @@ def main():
     'How You Want To Find Your CINEMA',
     ('Genre', 'Actor/Actress',"Release Year"),index=None,
    placeholder="Select Your Way")
+    try:
+        st.write('You selected:', option)
+        if option == 'Genre':
+            value = st.selectbox(
+                "Select Your Genre",
+                genre,index=None,placeholder="Select Your Way"
+            )
+            if value:
+                content=caller.Genre(value,language[lang])
+                count =0
+                with st.container():
+                    col1,col2,col3 = st.columns(3)
+                    while(count<20):
+                        with col1:
+                            st.image(content["image"][count])
+                            st.text(content["title"][count])
+                            count = count+1
+                        with col2:
+                            st.image(content["image"][count])
+                            st.text(content["title"][count])
+                            count = count+1
+                        with col3:
+                            st.image(content["image"][count])
+                            st.text(content["title"][count])
+                            count = count+1
 
-    st.write('You selected:', option)
-    if option == 'Genre':
-        value = st.selectbox(
-            "Select Your Genre",
-            genre,index=None,placeholder="Select Your Way"
-        )
-        if value:
-            content=caller.Genre(value,language[lang])
-            count =0
-            with st.container():
-                while(count<len(content["id"])):    
-                    st.image(content["image"][count])
-                    st.text(content["title"][count])
-                    count = count+1
-    if option == 'Actor/Actress':
-        value = st.selectbox(
-            "Select Your Actor/Actress",
-            actor,index=None,placeholder="Select Your Way"
-        )
-        if value:
-            content=caller.Actor(value,language[lang])
-            count =0
-            with st.container():
-                while(count<len(content["id"])):    
-                    st.image(content["image"][count])
-                    st.text(content["title"][count])
-                    count = count+1
-    if option == 'Release Year':
-        value = st.date_input("Enter The Year Of Release",value=None)
-        if value:
+
+        if option == 'Actor/Actress':
             
-            content=caller.Release(value,language[lang])
-            count =0
-            with st.container():
-                while(count<len(content["id"])):    
-                    st.image(content["image"][count])
-                    st.text(content["title"][count])
-                    count = count+1
+            value = st.text_input("Enter The Name",key=0)
+            value =value.title()
+            st.write("Actor Name:", value)
+            if value:
+                content=caller.Actor(value,language[lang])
+                count =0
+                with st.container():
+                    col1,col2,col3 = st.columns(3)
+                    while(count<20):
+                        with col1:
+                            st.image(content["image"][count])
+                            st.text(content["title"][count])
+                            count = count+1
+                        with col2:
+                            st.image(content["image"][count])
+                            st.text(content["title"][count])
+                            count = count+1
+                        with col3:
+                            st.image(content["image"][count])
+                            st.text(content["title"][count])
+                            count = count+1
+
+                        
+        if option == 'Release Year':
+            value = st.date_input("Enter The Year Of Release",value=None)
+            if value:
+                
+                content=caller.Release(value,language[lang])
+                count =0
+                with st.container():
+                    col1,col2,col3 = st.columns(3)
+                    while(count<20):
+                        with col1:
+                            st.image(content["image"][count])
+                            st.text(content["title"][count])
+                            count = count+1
+                        with col2:
+                            st.image(content["image"][count])
+                            st.text(content["title"][count])
+                            count = count+1
+                        with col3:
+                            st.image(content["image"][count])
+                            st.text(content["title"][count])
+                            count = count+1
+    except:
+        if(count==0):
+            st.title("No Movies")
+        else:
+            st.title("The END")
 
 
 if __name__=="__main__":
     main()
+
