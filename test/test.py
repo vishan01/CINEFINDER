@@ -26,7 +26,7 @@ class data:
              }
     def Genre(self,genre,lang):
         with engine.connect() as connection:
-            query= text(f"SELECT id,title,poster_path,recommendations FROM main_table WHERE original_language='{lang}' AND genres LIKE '%{genre}%' AND recommendations IS NOT NULL AND poster_path IS NOT NULL ORDER BY release_date DESC,vote_average DESC,result ASC;")
+            query= text(f"SELECT DISTINCT ON(id) id,title,poster_path,recommendations FROM main_table WHERE original_language='{lang}' AND genres LIKE '%{genre}%'  AND poster_path IS NOT NULL ORDER BY id,release_date DESC,vote_average DESC,result ASC;")
             result = connection.execute(query)
             
             for row in result:
@@ -37,7 +37,7 @@ class data:
         return content
     def Actor(self,actor,lang):
         with engine.connect() as connection:
-            query= text(f"SELECT id,title,poster_path,recommendations FROM main_table WHERE credits LIKE '%{actor}%' AND recommendations IS NOT NULL AND poster_path IS NOT NULL ORDER BY release_date DESC, result ASC,vote_average DESC;")
+            query= text(f"SELECT DISTINCT ON(id) id,title,poster_path,recommendations FROM main_table WHERE credits LIKE '%{actor}%' AND poster_path IS NOT NULL ORDER BY id,release_date DESC, result ASC,vote_average DESC;")
             result = connection.execute(query)
             
             for row in result:
@@ -48,7 +48,7 @@ class data:
         return content
     def Release(self,Year,lang):
         with engine.connect() as connection:
-            query= text(f"SELECT id,title,poster_path,recommendations FROM main_table WHERE original_language='{lang}' AND release_date BETWEEN DATE '{Year.year}-01-01' AND DATE '{Year}' AND recommendations IS NOT NULL AND poster_path IS NOT NULL ORDER BY release_date DESC,vote_average DESC,result ASC;")
+            query= text(f"SELECT DISTINCT ON(id) id,title,poster_path,recommendations FROM main_table WHERE original_language='{lang}' AND release_date BETWEEN DATE '{Year.year}-01-01' AND DATE '{Year}'  AND poster_path IS NOT NULL ORDER BY id,release_date DESC,vote_average DESC,result ASC;")
             result = connection.execute(query)
             
             for row in result:
@@ -58,11 +58,10 @@ class data:
                 content["recommendation"].append(row[3])
         return content
 
-    def recommend(self,re_list):
-        list_value=tuple(re_list)
+    def Randomize(self,value,lang):
         
         with engine.connect() as connection:
-            query = text(f"select id,title,poster_path,recommendations FROM main_table WHERE id in {list_value} AND recommendations IS NOT NULL AND poster_path IS NOT NULL ORDER BY result ASC, vote_average DESC;")
+            query = text(f"SELECT DISTINCT ON(id) id,title,poster_path,recommendations FROM main_table WHERE vote_average>={value} AND original_language='{lang}' AND release_date>= DATE '2018-01-01'  AND poster_path IS NOT NULL ORDER BY id,result ASC, vote_average DESC;")
             result = connection.execute(query)
             
             for row in result:
@@ -71,6 +70,7 @@ class data:
                 content["image"].append("https://image.tmdb.org/t/p/w300_and_h450_bestv2/"+str(row[2]))
                 content["recommendation"].append(row[3])
         return content
+        
         
     
 
@@ -89,11 +89,34 @@ def main():
    placeholder="Select Your Language")
     option = st.selectbox(
     'How You Want To Find Your CINEMA',
-    ('Genre', 'Actor/Actress',"Release Year"),index=None,
+    ("Randomize",'Genre', 'Actor/Actress',"Release Year"),index=None,
    placeholder="Select Your Way")
     
     try:
         st.write('You selected:', option)
+        if option == 'Randomize':
+            value=6
+            if value:
+                content=caller.Randomize(value,language[lang])
+                count =0
+                with st.container():
+                    col1,col2,col3 = st.columns(3)
+                    while(count<20):
+                        with col1:
+                            rand_count=random.randint(0,len(content["title"]))
+                            st.image(content["image"][rand_count])
+                            st.text(content["title"][rand_count])
+                            count = count+1
+                        with col2:
+                            rand_count=random.randint(0,len(content["title"]))
+                            st.image(content["image"][rand_count])
+                            st.text(content["title"][rand_count])
+                            count = count+1
+                        with col3:
+                            rand_count=random.randint(0,len(content["title"]))
+                            st.image(content["image"][rand_count])
+                            st.text(content["title"][rand_count])
+                            count = count+1
         if option == 'Genre':
             value = st.selectbox(
                 "Select Your Genre",
@@ -122,7 +145,8 @@ def main():
         if option == 'Actor/Actress':
             
             value = st.text_input("Enter The Name",key=0)
-            value =value.title()
+            if value!=value.upper():
+                value =value.title()
             st.write("Actor Name:", value)
             if value:
                 content=caller.Actor(value,language[lang])
