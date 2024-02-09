@@ -25,7 +25,7 @@ class data:
              }
     def Genre(self,genre,lang):
         with engine.connect() as connection:
-            query= text(f"SELECT id,title,poster_path,recommendations FROM main_table WHERE original_language='{lang}' AND genres LIKE '%{genre}%' AND poster_path IS NOT NULL ORDER BY release_date ASC,vote_average DESC,result ASC;")
+            query= text(f"SELECT id,title,poster_path,recommendations FROM main_table WHERE original_language='{lang}' AND genres LIKE '%{genre}%' AND vote_average>=7 AND poster_path IS NOT NULL ORDER BY release_date ASC,vote_average DESC, popularity DESC;")
             result = connection.execute(query)
             
             for row in result:
