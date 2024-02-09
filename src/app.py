@@ -92,7 +92,7 @@ def main():
     genre=pkl.load(open("/mount/src/cinefinder/src/genres.pkl","rb"))
     language = pkl.load(open("/mount/src/cinefinder/src/lang.pkl","rb"))
     count=0
-    st.set_page_config(page_title="CINEFINDER", page_icon="🖥️")
+    st.set_page_config(page_title="CINEFINDER", page_icon="🖥️",layout="wide")
     st.title(":orange[CINEFINDER]: :blue[THE MOVIE GENIE]")
     lang = st.selectbox(
     'Select Your Language',
