@@ -11,7 +11,7 @@ db = st.secrets['db']
 engine = create_engine(f'postgresql://{user}:{password}@{host}/{db}')
 
 if "recommendation" not in st.session_state:
-    st.session_state["recommendation"]=[]
+    st.session_state["recommendation"]=False
 
 class data:
     global content
