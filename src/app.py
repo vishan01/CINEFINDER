@@ -25,7 +25,7 @@ class data:
              }
     def Genre(self,genre,lang):
         with engine.connect() as connection:
-            query= text(f"SELECT DISTINCT ON(id) id,title,poster_path,recommendations FROM main_table WHERE original_language='{lang}' AND genres LIKE '%{genre}%'  AND poster_path IS NOT NULL ORDER BY id,release_date DESC,vote_average DESC,result ASC;")
+            query= text(f"SELECT id,title,poster_path,recommendations FROM main_table WHERE original_language='{lang}' AND genres LIKE '%{genre}%'  AND poster_path IS NOT NULL ORDER BY release_date DESC,vote_average DESC,result ASC;")
             result = connection.execute(query)
             
             for row in result:
@@ -36,7 +36,7 @@ class data:
         return content
     def Actor(self,actor,lang):
         with engine.connect() as connection:
-            query= text(f"SELECT DISTINCT ON(id) id,title,poster_path,recommendations FROM main_table WHERE credits LIKE '%{actor}%' AND poster_path IS NOT NULL ORDER BY id,release_date DESC, result ASC,vote_average DESC;")
+            query= text(f"SELECT id,title,poster_path,recommendations FROM main_table WHERE credits LIKE '%{actor}%' AND poster_path IS NOT NULL ORDER BY release_date DESC, result ASC,vote_average DESC;")
             result = connection.execute(query)
             
             for row in result:
@@ -47,7 +47,7 @@ class data:
         return content
     def Release(self,Year,lang):
         with engine.connect() as connection:
-            query= text(f"SELECT DISTINCT ON(id) id,title,poster_path,recommendations FROM main_table WHERE original_language='{lang}' AND release_date BETWEEN DATE '{Year.year}-01-01' AND DATE '{Year}'  AND poster_path IS NOT NULL ORDER BY id,release_date DESC,vote_average DESC,result ASC;")
+            query= text(f"SELECT id,title,poster_path,recommendations FROM main_table WHERE original_language='{lang}' AND release_date BETWEEN DATE '{Year.year}-01-01' AND DATE '{Year}'  AND poster_path IS NOT NULL ORDER BY release_date DESC,vote_average DESC,result ASC;")
             result = connection.execute(query)
             
             for row in result:
@@ -60,7 +60,7 @@ class data:
     def Randomize(self,value,lang):
         
         with engine.connect() as connection:
-            query = text(f"SELECT DISTINCT ON(id) id,title,poster_path,recommendations FROM main_table WHERE vote_average>={value} AND original_language='{lang}' AND release_date>= DATE '2018-01-01'  AND poster_path IS NOT NULL ORDER BY id,result ASC, vote_average DESC;")
+            query = text(f"SELECT id,title,poster_path,recommendations FROM main_table WHERE vote_average>={value} AND original_language='{lang}' AND release_date>= DATE '2018-01-01'  AND poster_path IS NOT NULL ORDER BY result ASC, vote_average DESC;")
             result = connection.execute(query)
             
             for row in result:
@@ -73,7 +73,7 @@ class data:
     def recommend(self,m_list):
         m_list=tuple(m_list.split("-"))
         with engine.connect() as connection:
-            query = text(f"SELECT DISTINCT ON(id) id,title,poster_path,recommendations FROM main_table WHERE id in {m_list}  AND poster_path IS NOT NULL ORDER BY id,result ASC, vote_average DESC;")
+            query = text(f"SELECT id,title,poster_path,recommendations FROM main_table WHERE id in {m_list}  AND poster_path IS NOT NULL ORDER BY result ASC, vote_average DESC;")
             result = connection.execute(query)
             
             for row in result:
