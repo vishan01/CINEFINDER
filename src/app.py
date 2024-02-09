@@ -19,7 +19,7 @@ class data:
 
     content={
             "id":[],
-            "title":[],
+            'title':[],
              "image":[],
              "recommendation":[]   
              }
@@ -30,7 +30,7 @@ class data:
             
             for row in result:
                 content["id"].append(row[0])
-                content["title"].append(row[1])
+                content['title'].append(row[1])
                 content["image"].append("https://image.tmdb.org/t/p/w300_and_h450_bestv2/"+str(row[2]))
                 content["recommendation"].append(row[3])
         return content
@@ -41,7 +41,7 @@ class data:
             
             for row in result:
                 content["id"].append(row[0])
-                content["title"].append(row[1])
+                content['title'].append(row[1])
                 content["image"].append("https://image.tmdb.org/t/p/w300_and_h450_bestv2/"+str(row[2]))
                 content["recommendation"].append(row[3])
         return content
@@ -52,7 +52,7 @@ class data:
             
             for row in result:
                 content["id"].append(row[0])
-                content["title"].append(row[1])
+                content['title'].append(row[1])
                 content["image"].append("https://image.tmdb.org/t/p/w300_and_h450_bestv2/"+str(row[2]))
                 content["recommendation"].append(row[3])
         return content
@@ -65,7 +65,7 @@ class data:
             
             for row in result:
                 content["id"].append(row[0])
-                content["title"].append(row[1])
+                content['title'].append(row[1])
                 content["image"].append("https://image.tmdb.org/t/p/w300_and_h450_bestv2/"+str(row[2]))
                 content["recommendation"].append(row[3])
         return content
@@ -78,7 +78,7 @@ class data:
             
             for row in result:
                 content["id"].append(row[0])
-                content["title"].append(row[1])
+                content['title'].append(row[1])
                 content["image"].append("https://image.tmdb.org/t/p/w300_and_h450_bestv2/"+str(row[2]))
                 content["recommendation"].append(row[3])
         return content
@@ -117,9 +117,9 @@ def main():
                     try:
                         while(count<20):
                             with col1:
-                                with st.form(key=f"{content["title"][count]}"):
+                                with st.form(key=f"{content['title'][count]}"):
                                     st.image(content["image"][count])
-                                    st.text(content["title"][count])
+                                    st.text(content['title'][count])
                                     count = count+1
                                     submit=st.form_submit_button("Recommend")
                                     if submit:
@@ -127,9 +127,9 @@ def main():
                                          
                                     
                             with col2:
-                                with st.form(key=f"{content["title"][count]}"):
+                                with st.form(key=f"{content['title'][count]}"):
                                     st.image(content["image"][count])
-                                    st.text(content["title"][count])
+                                    st.text(content['title'][count])
                                     count = count+1
                                     
                                     submit=st.form_submit_button("Recommend")
@@ -138,9 +138,9 @@ def main():
                                          
                                     
                             with col3:
-                                with st.form(key=f"{content["title"][count]}"):
+                                with st.form(key=f"{content['title'][count]}"):
                                     st.image(content["image"][count])
-                                    st.text(content["title"][count])
+                                    st.text(content['title'][count])
                                     count = count+1
                                      
                                     submit=st.form_submit_button("Recommend")
@@ -160,10 +160,10 @@ def main():
                         col1,col2,col3 = st.columns(3)
                         while(count<20):
                             with col1:
-                                with st.form(key=f"{content["title"][count]}"):
-                                    rand_count=random.randint(0,len(content["title"]))
+                                with st.form(key=f"{content['title'][count]}"):
+                                    rand_count=random.randint(0,len(content['title']))
                                     st.image(content["image"][rand_count])
-                                    st.text(content["title"][rand_count])
+                                    st.text(content['title'][rand_count])
                                     count = count+1
                                      
                                     submit=st.form_submit_button("Recommend")
@@ -173,10 +173,10 @@ def main():
 
                                     
                             with col2:
-                                with st.form(key=f"{content["title"][count]}"):
-                                    rand_count=random.randint(0,len(content["title"]))
+                                with st.form(key=f"{content['title'][count]}"):
+                                    rand_count=random.randint(0,len(content['title']))
                                     st.image(content["image"][rand_count])
-                                    st.text(content["title"][rand_count])
+                                    st.text(content['title'][rand_count])
                                     count = count+1                                     
                                     submit=st.form_submit_button("Recommend")
                                     if submit:
@@ -185,10 +185,10 @@ def main():
 
                                     
                             with col3:
-                                with st.form(key=f"{content["title"][count]}"):
-                                    rand_count=random.randint(0,len(content["title"]))
+                                with st.form(key=f"{content['title'][count]}"):
+                                    rand_count=random.randint(0,len(content['title']))
                                     st.image(content["image"][rand_count])
-                                    st.text(content["title"][rand_count])
+                                    st.text(content['title'][rand_count])
                                     count = count+1
                                      
                                     submit=st.form_submit_button("Recommend")
@@ -207,9 +207,9 @@ def main():
                     try:
                         while(count<20):
                             with col1:
-                                with st.form(key=f"{content["title"][count]}"):
+                                with st.form(key=f"{content['title'][count]}"):
                                     st.image(content["image"][count])
-                                    st.text(content["title"][count])
+                                    st.text(content['title'][count])
                                     count = count+1
                                      
                                     submit=st.form_submit_button("Recommend")
@@ -218,9 +218,9 @@ def main():
                                          
                                     
                             with col2:
-                                with st.form(key=f"{content["title"][count]}"):
+                                with st.form(key=f"{content['title'][count]}"):
                                     st.image(content["image"][count])
-                                    st.text(content["title"][count])
+                                    st.text(content['title'][count])
                                     count = count+1
                                      
                                     submit=st.form_submit_button("Recommend")
@@ -229,9 +229,9 @@ def main():
                                          
                                     
                             with col3:
-                                with st.form(key=f"{content["title"][count]}"):
+                                with st.form(key=f"{content['title'][count]}"):
                                     st.image(content["image"][count])
-                                    st.text(content["title"][count])
+                                    st.text(content['title'][count])
                                     count = count+1
                                      
                                     submit=st.form_submit_button("Recommend")
@@ -252,9 +252,9 @@ def main():
                         col1,col2,col3 = st.columns(3)
                         while(count<20):
                             with col1:
-                                with st.form(key=f"{content["title"][count]}"):
+                                with st.form(key=f"{content['title'][count]}"):
                                     st.image(content["image"][ count])
-                                    st.text(content["title"][ count])
+                                    st.text(content['title'][ count])
                                     count = count+1
                                      
                                     submit=st.form_submit_button("Recommend")
@@ -264,9 +264,9 @@ def main():
 
                                     
                             with col2:
-                                with st.form(key=f"{content["title"][count]}"):
+                                with st.form(key=f"{content['title'][count]}"):
                                     st.image(content["image"][ count])
-                                    st.text(content["title"][ count])
+                                    st.text(content['title'][ count])
                                     count = count+1
                                      
                                     submit=st.form_submit_button("Recommend")
@@ -276,9 +276,9 @@ def main():
 
                                     
                             with col3:
-                                with st.form(key=f"{content["title"][count]}"):
+                                with st.form(key=f"{content['title'][count]}"):
                                     st.image(content["image"][ count])
-                                    st.text(content["title"][ count])
+                                    st.text(content['title'][ count])
                                     count = count+1
                                      
                                     submit=st.form_submit_button("Recommend")
@@ -298,9 +298,9 @@ def main():
                     try:
                         while(count<20):
                             with col1:
-                                with st.form(key=f"{content["title"][count]}"):
+                                with st.form(key=f"{content['title'][count]}"):
                                     st.image(content["image"][count])
-                                    st.text(content["title"][count])
+                                    st.text(content['title'][count])
                                     count = count+1
                                      
                                     submit=st.form_submit_button("Recommend")
@@ -309,9 +309,9 @@ def main():
                                          
                                     
                             with col2:
-                                with st.form(key=f"{content["title"][count]}"):
+                                with st.form(key=f"{content['title'][count]}"):
                                     st.image(content["image"][count])
-                                    st.text(content["title"][count])
+                                    st.text(content['title'][count])
                                     count = count+1
                                      
                                     submit=st.form_submit_button("Recommend")
@@ -320,9 +320,9 @@ def main():
                                          
                                     
                             with col3:
-                                with st.form(key=f"{content["title"][count]}"):
+                                with st.form(key=f"{content['title'][count]}"):
                                     st.image(content["image"][count])
-                                    st.text(content["title"][count])
+                                    st.text(content['title'][count])
                                     count = count+1
                                      
                                     submit=st.form_submit_button("Recommend")
@@ -344,10 +344,10 @@ def main():
                         col1,col2,col3 = st.columns(3)
                         while(count<20):
                             with col1:
-                                with st.form(key=f"{content["title"][count]}"):
+                                with st.form(key=f"{content['title'][count]}"):
                                     
                                     st.image(content["image"][count])
-                                    st.text(content["title"][count])
+                                    st.text(content['title'][count])
                                     count = count+1
                                      
                                     submit=st.form_submit_button("Recommend")
@@ -356,10 +356,10 @@ def main():
                                          
                                     
                             with col2:
-                                with st.form(key=f"{content["title"][count]}"):
+                                with st.form(key=f"{content['title'][count]}"):
                                 
                                     st.image(content["image"][count])
-                                    st.text(content["title"][count])
+                                    st.text(content['title'][count])
                                     count = count+1
                                      
                                     submit=st.form_submit_button("Recommend")
@@ -368,10 +368,10 @@ def main():
                                          
                                     
                             with col3:
-                                with st.form(key=f"{content["title"][count]}"):
+                                with st.form(key=f"{content['title'][count]}"):
                                     
                                     st.image(content["image"][count])
-                                    st.text(content["title"][count])
+                                    st.text(content['title'][count])
                                     count = count+1
                                      
                                     submit=st.form_submit_button("Recommend")
@@ -388,9 +388,9 @@ def main():
                     try:
                         while(count<20):
                             with col1:
-                                with st.form(key=f"{content["title"][count]}"):
+                                with st.form(key=f"{content['title'][count]}"):
                                     st.image(content["image"][count])
-                                    st.text(content["title"][count])
+                                    st.text(content['title'][count])
                                     count = count+1
                                      
                                     submit=st.form_submit_button("Recommend")
@@ -399,9 +399,9 @@ def main():
                                          
                                     
                             with col2:
-                                with st.form(key=f"{content["title"][count]}"):
+                                with st.form(key=f"{content['title'][count]}"):
                                     st.image(content["image"][count])
-                                    st.text(content["title"][count])
+                                    st.text(content['title'][count])
                                     count = count+1
                                      
                                     submit=st.form_submit_button("Recommend")
@@ -410,9 +410,9 @@ def main():
                                          
                                     
                             with col3:
-                                with st.form(key=f"{content["title"][count]}"):
+                                with st.form(key=f"{content['title'][count]}"):
                                     st.image(content["image"][count])
-                                    st.text(content["title"][count])
+                                    st.text(content['title'][count])
                                     count = count+1
                                      
                                     submit=st.form_submit_button("Recommend")
@@ -431,10 +431,10 @@ def main():
                         col1,col2,col3 = st.columns(3)
                         while(count<20):
                             with col1:
-                                with st.form(key=f"{content["title"][count]}"):
+                                with st.form(key=f"{content['title'][count]}"):
                                     
                                     st.image(content["image"][count])
-                                    st.text(content["title"][count])
+                                    st.text(content['title'][count])
                                     count = count+1
                                      
                                     submit=st.form_submit_button("Recommend")
@@ -444,10 +444,10 @@ def main():
                                     
 
                             with col2:
-                                with st.form(key=f"{content["title"][count]}"):
+                                with st.form(key=f"{content['title'][count]}"):
                                     
                                     st.image(content["image"][count])
-                                    st.text(content["title"][count])
+                                    st.text(content['title'][count])
                                     count = count+1
                                      
                                     submit=st.form_submit_button("Recommend")
@@ -456,10 +456,10 @@ def main():
                                          
 
                             with col3:
-                                with st.form(key=f"{content["title"][count]}"):
+                                with st.form(key=f"{content['title'][count]}"):
                                     
                                     st.image(content["image"][count])
-                                    st.text(content["title"][count])
+                                    st.text(content['title'][count])
                                     count = count+1
                                      
                                     submit=st.form_submit_button("Recommend")
