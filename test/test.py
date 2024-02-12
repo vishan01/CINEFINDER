@@ -85,7 +85,46 @@ class data:
                 content["recommendation"].append(row[3])
         return content
         
-    
+def display(content):
+    count =0
+    with st.container():
+        col1,col2,col3 = st.columns(3)
+        try:
+            while(count<20):
+                with col1:
+                    with st.form(key=f"{content['title'][count]}"):
+                        st.image(content["image"][count])
+                        st.text(content['title'][count])
+                        count = count+1
+                        submit=st.form_submit_button("Recommend")
+                        if submit:
+                            st.session_state["recom"]=content["recommendation"][count]
+                                
+                        
+                with col2:
+                    with st.form(key=f"{content['title'][count]}"):
+                        st.image(content["image"][count])
+                        st.text(content['title'][count])
+                        count = count+1
+                        
+                        submit=st.form_submit_button("Recommend")
+                        if submit:
+                            st.session_state["recom"]=content["recommendation"][count]
+                                
+                        
+                with col3:
+                    with st.form(key=f"{content['title'][count]}"):
+                        st.image(content["image"][count])
+                        st.text(content['title'][count])
+                        count = count+1
+                            
+                        submit=st.form_submit_button("Recommend")
+                        if submit:
+                            st.session_state["recom"]=content["recommendation"][ count]
+                                
+        except:
+            st.session_state["recom"]=False
+ 
 
 
 
@@ -114,43 +153,7 @@ def main():
             if st.session_state["recom"]:
                 content=caller.recommend(st.session_state["recom"])
                 count =0
-                with st.container():
-                    col1,col2,col3 = st.columns(3)
-                    try:
-                        while(count<20):
-                            with col1:
-                                with st.form(key=f"{content["title"][count]}"):
-                                    st.image(content["image"][count])
-                                    st.text(content["title"][count])
-                                    count = count+1
-                                    submit=st.form_submit_button("Recommend")
-                                    if submit:
-                                        st.session_state["recom"]=content["recommendation"][count]
-                                         
-                                    
-                            with col2:
-                                with st.form(key=f"{content["title"][count]}"):
-                                    st.image(content["image"][count])
-                                    st.text(content["title"][count])
-                                    count = count+1
-                                    
-                                    submit=st.form_submit_button("Recommend")
-                                    if submit:
-                                        st.session_state["recom"]=content["recommendation"][count]
-                                         
-                                    
-                            with col3:
-                                with st.form(key=f"{content["title"][count]}"):
-                                    st.image(content["image"][count])
-                                    st.text(content["title"][count])
-                                    count = count+1
-                                     
-                                    submit=st.form_submit_button("Recommend")
-                                    if submit:
-                                        st.session_state["recom"]=content["recommendation"][ count]
-                                         
-                    except:
-                        st.session_state["recom"]=False
+                display(content)
 
             else:        
                 value=7
