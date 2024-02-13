@@ -152,54 +152,13 @@ def main():
         if option == 'Randomize':
             if st.session_state["recom"]:
                 content=caller.recommend(st.session_state["recom"])
-                count =0
                 display(content)
 
             else:        
                 value=7
-                if value:
-                    
+                if value:                    
                     content=caller.Randomize(value,language[lang])
-                    count =0
-                    with st.container():
-                        col1,col2,col3 = st.columns(3)
-                        while(count<20):
-                            with col1:
-                                with st.form(key=f"{content["title"][count]}"):
-                                    rand_count=random.randint(0,len(content["title"]))
-                                    st.image(content["image"][rand_count])
-                                    st.text(content["title"][rand_count])
-                                    count = count+1
-                                     
-                                    submit=st.form_submit_button("Recommend")
-                                    if submit:
-                                        st.session_state["recom"]=content["recommendation"][ count]
-                                         
-
-                                    
-                            with col2:
-                                with st.form(key=f"{content["title"][count]}"):
-                                    rand_count=random.randint(0,len(content["title"]))
-                                    st.image(content["image"][rand_count])
-                                    st.text(content["title"][rand_count])
-                                    count = count+1                                     
-                                    submit=st.form_submit_button("Recommend")
-                                    if submit:
-                                        st.session_state["recom"]=content["recommendation"][ count]
-                                         
-
-                                    
-                            with col3:
-                                with st.form(key=f"{content["title"][count]}"):
-                                    rand_count=random.randint(0,len(content["title"]))
-                                    st.image(content["image"][rand_count])
-                                    st.text(content["title"][rand_count])
-                                    count = count+1
-                                     
-                                    submit=st.form_submit_button("Recommend")
-                                    if submit:
-                                        st.session_state["recom"]=content["recommendation"][ count]
-                                         
+                    display(content)
 
                                     
                         
