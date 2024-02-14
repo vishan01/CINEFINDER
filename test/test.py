@@ -121,6 +121,7 @@ def display(content):
                         submit=st.form_submit_button("Recommend")
                         if submit:
                             st.session_state["recom"]=content["recommendation"][ count]
+                            print(st.session_state["recom"])
                                 
         except:
             st.session_state["recom"]=False
@@ -150,6 +151,7 @@ def main():
     try:
         st.write('You selected:', option)
         if option == 'Randomize':
+            print(st.session_state["recom"])
             if st.session_state["recom"]:
                 content=caller.recommend(st.session_state["recom"])
                 display(content)
