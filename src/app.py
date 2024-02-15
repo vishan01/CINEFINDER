@@ -99,38 +99,36 @@ def display(content):
                     with st.form(key=f"{content['title'][count]}"):
                         st.image(content["image"][count])
                         st.text(content['title'][count])
-                        count = count+1
+                        
                         submit=st.form_submit_button("Recommend")
                         if submit:
                             st.session_state["recom"]=content["recommendation"][count]
                         with st.expander("Description"):
-                            st.write(content["overview"][count])        
+                            st.write(content["overview"][count])       
+                        count = count+1 
                         
                 with col2:
                     with st.form(key=f"{content['title'][count]}"):
                         st.image(content["image"][count])
                         st.text(content['title'][count])
-                        count = count+1
-                        
                         submit=st.form_submit_button("Recommend")
                         if submit:
                             st.session_state["recom"]=content["recommendation"][count]
                         with st.expander("Description"):
                             st.write(content["overview"][count])
+                        count = count+1 
                                 
                         
                 with col3:
                     with st.form(key=f"{content['title'][count]}"):
                         st.image(content["image"][count])
-                        st.text(content['title'][count])
-                        count = count+1
-                            
+                        st.text(content['title'][count])                            
                         submit=st.form_submit_button("Recommend")
                         if submit:
                             st.session_state["recom"]=content["recommendation"][ count]
                         with st.expander("Description"):
                             st.write(content["overview"][count])
-                                
+                        count = count+1 
         except:
             st.session_state["recom"]=False
 
