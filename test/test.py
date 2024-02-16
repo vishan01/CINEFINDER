@@ -27,9 +27,10 @@ class data:
              }
     def Genre(self,genre,lang):
         with engine.connect() as connection:
-            query= text(f"SELECT id,title,poster_path,recommendations,overview FROM main_table WHERE original_language='{lang}' AND genres LIKE '%{genre}%'  AND poster_path IS NOT NULL ORDER BY release_date DESC, result,  popularity DESC,vote_average DESC ;")
+            query= text(f"SELECT id,title,poster_path,recommendations,overview FROM main_table WHERE original_language='{lang}' AND genres LIKE '%{genre}%'  AND poster_path IS NOT NULL AND release_date IS NOT NULL ORDER BY release_date DESC, result,  popularity DESC,vote_average DESC ;")
             result = connection.execute(query)
             result=list(set(result))
+            print(query)
             for row in result:
                 content["id"].append(row[0])
                 content['title'].append(row[1])
@@ -39,7 +40,7 @@ class data:
         return content
     def Actor(self,actor,lang):
         with engine.connect() as connection:
-            query= text(f"SELECT id,title,poster_path,recommendations,overview FROM main_table WHERE credits LIKE '%{actor}-%' AND poster_path IS NOT NULL ORDER BY release_date DESC, result,  popularity DESC,vote_average DESC ;")
+            query= text(f"SELECT id,title,poster_path,recommendations,overview FROM main_table WHERE credits LIKE '%{actor}-%' AND poster_path IS NOT NULL AND release_date IS NOT NULL ORDER BY release_date DESC, result,  popularity DESC,vote_average DESC ;")
             result = connection.execute(query)
             result=list(set(result))
             for row in result:
@@ -51,7 +52,7 @@ class data:
         return content
     def Release(self,Year,lang):
         with engine.connect() as connection:
-            query= text(f"SELECT id,title,poster_path,recommendations,overview FROM main_table WHERE original_language='{lang}' AND release_date BETWEEN DATE '{Year.year}-01-01' AND DATE '{Year}'  AND poster_path IS NOT NULL AND recommendations IS NOT NULL ORDER BY release_date DESC,vote_average DESC,result ASC;")
+            query= text(f"SELECT id,title,poster_path,recommendations,overview FROM main_table WHERE original_language='{lang}' AND release_date BETWEEN DATE '{Year.year}-01-01' AND DATE '{Year}'  AND poster_path IS NOT NULL AND release_date IS NOT NULL AND recommendations IS NOT NULL ORDER BY release_date DESC,vote_average DESC,result ASC;")
             result = connection.execute(query)
             result=list(set(result))
             for row in result:
@@ -65,7 +66,7 @@ class data:
     def Randomize(self,value,lang):
         
         with engine.connect() as connection:
-            query = text(f"SELECT id,title,poster_path,recommendations,overview FROM main_table WHERE vote_average>={value} AND original_language='{lang}' AND release_date>= DATE '2018-01-01'  AND poster_path IS NOT NULL AND recommendations IS NOT NULL ORDER BYrelease_date DESC, result,  popularity DESC,vote_average DESC ;")
+            query = text(f"SELECT id,title,poster_path,recommendations,overview FROM main_table WHERE vote_average>={value} AND original_language='{lang}' AND release_date>= DATE '2018-01-01'  AND poster_path IS NOT NULL AND recommendations IS NOT NULL ORDER BY release_date DESC, result,  popularity DESC,vote_average DESC ;")
             result = connection.execute(query)
             result=list(set(result))
             for row in result:
@@ -95,7 +96,7 @@ def display(content):
     with st.container():
         col1,col2,col3 = st.columns(3)
         try:
-            while(count<len(content["title"])):
+            while(count<20):
                 with col1:
                     with st.form(key=f"{content['title'][count]}"):
                         st.image(content["image"][count])
@@ -126,7 +127,7 @@ def display(content):
                         st.text(content['title'][count])
                         submit=st.form_submit_button("Recommend")
                         if submit:
-                            st.session_state["recom"]=content["recommendation"][ count]
+                            st.session_state["recom"]=content["recommendation"][count]
                         with st.expander("Description"):
                             st.write(content["overview"][count])
                         count = count+1 
