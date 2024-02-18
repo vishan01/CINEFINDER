@@ -16,6 +16,8 @@ engine = create_engine(f'postgresql://{user}:{password}@{host}/{db}')
 
 if "recom" not in st.session_state:
     st.session_state["recom"]=False
+if "search" not in st.session_state:
+    st.session_state["search"]=False
 
 class data:
     global content
@@ -157,7 +159,8 @@ def display(content):
                             st.write(content["overview"][count])
                         count = count+1 
                                 
-        except(AttributeError):
+        except:
+            st.title("Click on Back to Home to Search differently")
             st.session_state["recom"]=False
  
 
@@ -179,70 +182,48 @@ def main():
     ("Randomize",'Genre', 'Actor/Actress',"Release Year"),index=None,
    placeholder="Select Your Way")
     with st.sidebar:
-        search=st_searchbox(name_suggestor,key="Searchbox",label="Search by Movie Name")
+        st.session_state["search"]=st_searchbox(name_suggestor,key="Searchbox",label="Search by Movie Name")
         if st.button("Back to Home State"):
             st.session_state["recom"]=False
+            st.session_state["search"]=False
 
     try:
-        if search:
-            if st.session_state["recom"]:
-                    content=caller.recommend(st.session_state["recom"])
-                    display(content)
-            else:        
-                if search:                    
-                    content=caller.movie_name(search)
-                    display(content)
+        
+        if st.session_state["recom"]:
+                content=caller.recommend(st.session_state["recom"])
+                display(content)      
+                
         else:
             st.write('You selected:', option)
-            if option == 'Randomize':
-                if st.session_state["recom"]:
-                    content=caller.recommend(st.session_state["recom"])
+            if st.session_state["search"]:                    
+                    content=caller.movie_name(st.session_state["search"])
                     display(content)
-
-                else:        
-                    value=7
-                    if value:                    
-                        content=caller.Randomize(value,language[lang])
-                        display(content)
-
-                                        
-                            
-            if option == 'Genre':
-                if st.session_state["recom"]:
-                    content=caller.recommend(st.session_state["recom"])
+            elif option == 'Randomize':
+                value=7
+                if value:                    
+                    content=caller.Randomize(value,language[lang])
+                    display(content)             
+            elif option == 'Genre':
+                value = st.selectbox(
+                    "Select Your Genre",
+                    genre,index=None,placeholder="Select Your Way"
+                )
+                if value:
+                    content=caller.Genre(value,language[lang])
+                    display(content)                        
+            elif option == 'Actor/Actress':
+                value = st.text_input("Enter The Name",key=0)
+                if value!=value.upper():
+                    value =value.title()
+                st.write("Actor Name:", value)
+                if value:
+                    content=caller.Actor(value,language[lang])
+                    display(content)            
+            elif option == 'Release Year':
+                value = st.date_input("Enter The Year Of Release",value=None)
+                if value:
+                    content=caller.Release(value,language[lang])
                     display(content)
-                else:
-                    value = st.selectbox(
-                        "Select Your Genre",
-                        genre,index=None,placeholder="Select Your Way"
-                    )
-                    if value:
-                        content=caller.Genre(value,language[lang])
-                        display(content)
-
-                                        
-            if option == 'Actor/Actress':
-                if st.session_state["recom"]:
-                    content=caller.recommend(st.session_state["recom"])
-                    display(content)
-                else:
-                    value = st.text_input("Enter The Name",key=0)
-                    if value!=value.upper():
-                        value =value.title()
-                    st.write("Actor Name:", value)
-                    if value:
-                        content=caller.Actor(value,language[lang])
-                        display(content)
-                            
-            if option == 'Release Year':
-                if st.session_state["recom"]:
-                    content=caller.recommend(st.session_state["recom"])
-                    display(content)
-                else:
-                    value = st.date_input("Enter The Year Of Release",value=None)
-                    if value:
-                        content=caller.Release(value,language[lang])
-                        display(content)
 
     except(AttributeError):
         if(count==0):
