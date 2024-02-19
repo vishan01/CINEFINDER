@@ -182,7 +182,7 @@ def main():
     ("Randomize",'Genre', 'Actor/Actress',"Release Year"),index=None,
    placeholder="Select Your Way")
     with st.sidebar:
-        st.session_state["search"]=st_searchbox(name_suggestor,key="Searchbox",label="Search by Movie Name")
+        st.session_state["search"]=st_searchbox(name_suggestor,key="Searchbox",label="Search by Movie Name",clear_on_submit=True)
         if st.button("Back to Home State"):
             st.session_state["recom"]=False
             st.session_state["search"]=False
