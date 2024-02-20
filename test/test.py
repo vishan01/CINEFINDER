@@ -161,6 +161,7 @@ def display(content):
                                 
         except:
             st.title("Click on Back to Home to Search differently")
+            st.session_state["search"]=False
             st.session_state["recom"]=False
  
 
